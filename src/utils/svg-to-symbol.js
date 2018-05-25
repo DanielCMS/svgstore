@@ -7,6 +7,7 @@
 
 var SELECTOR_SVG = 'svg';
 var TEMPLATE_SYMBOL = '<symbol/>';
+var GROUP_SYMBOL = '<g/>';
 var ATTRIBUTE_ID = 'id';
 
 /**
@@ -18,9 +19,10 @@ var ATTRIBUTE_ID = 'id';
  */
 function svgToSymbol(id, child, options) {
 	var svgElem = child(SELECTOR_SVG);
+        var enclosingTag = options.svgstoreOpts.useGroup ? GROUP_SYMBOL : TEMPLATE_SYMBOL;
 
 	// initialize a new <symbol> element
-	var symbol = child(TEMPLATE_SYMBOL);
+	var symbol = child(enclosingTag);
 
 	symbol.attr(ATTRIBUTE_ID, id);
 	symbol.append(svgElem.contents());

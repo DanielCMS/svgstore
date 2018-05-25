@@ -7,11 +7,12 @@ var loadXml = require('./utils/load-xml');
 var removeAttributes = require('./utils/remove-attributes');
 var setAttributes = require('./utils/set-attributes');
 var svgToSymbol = require('./utils/svg-to-symbol');
+var unifyId = require('./utils/unifyId');
 
 var SELECTOR_SVG = 'svg';
 var SELECTOR_DEFS = 'defs';
 
-var TEMPLATE_SVG = '<svg><defs/></svg>';
+var TEMPLATE_SVG = '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><defs/></svg>';
 var TEMPLATE_DOCTYPE = '<?xml version="1.0" encoding="UTF-8"?>' +
 	'<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" ' +
 	'"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">';
@@ -37,6 +38,10 @@ function svgstore(options) {
 		element: parent,
 
 		add: function (id, file, options) {
+                        if (svgstoreOptions.svgstoreOpts.unifyIds) {
+                            file = unifyId(id, file, options);
+                        }
+
 			var child = loadXml(file);
 			var addOptions = assign({}, svgstoreOptions, options);
 
