@@ -7,7 +7,8 @@ var loadXml = require('./utils/load-xml');
 var removeAttributes = require('./utils/remove-attributes');
 var setAttributes = require('./utils/set-attributes');
 var svgToSymbol = require('./utils/svg-to-symbol');
-var unifyId = require('./utils/unifyId');
+var unifyId = require('./utils/unify-id');
+var replaceSassVars = require('./utils/replace-sass-vars');
 
 var SELECTOR_SVG = 'svg';
 var SELECTOR_DEFS = 'defs';
@@ -40,6 +41,12 @@ function svgstore(options) {
 		add: function (id, file, options) {
                         if (svgstoreOptions.svgstoreOpts.unifyIds) {
                             file = unifyId(id, file, options);
+                        }
+
+                        var sassVarsMap = svgstoreOptions.svgstoreOpts.sassVarsMap;
+
+                        if (sassVarsMap) {
+                            file = replaceSassVars(id, file, sassVarsMap);
                         }
 
 			var child = loadXml(file);

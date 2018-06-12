@@ -30,7 +30,7 @@ function unifyId(id, file, options) {
             newIdArray.push(newId);
         }
 
-        var processed = child.xml();
+        processed = child.xml();
 
         for (i = 0; i < tagsWithId.length; i++) {
             oldId = oldIdArray[i];
